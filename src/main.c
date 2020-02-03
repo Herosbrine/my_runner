@@ -124,6 +124,20 @@ int main()
     sfSprite_setTexture(stext4a, ttext4a, 0);
     sfSprite_setPosition(stext4a, (sfVector2f) {c, 400});
 
+    sfTexture *ttext10;
+    ttext10 = sfTexture_createFromFile("images/game_over.png", NULL);
+    sfSprite *stext10;
+    stext10 = sfSprite_create();
+    sfSprite_setTexture(stext10, ttext10, 0);
+    sfSprite_setPosition(stext10, (sfVector2f) {500, 302});
+
+    sfTexture *ttext11;
+    ttext11 = sfTexture_createFromFile("images/restart.png", NULL);
+    sfSprite *stext11;
+    stext11 = sfSprite_create();
+    sfSprite_setTexture(stext11, ttext11, 0);
+    sfSprite_setPosition(stext11, (sfVector2f) {650, 360});
+
 
     window = sfRenderWindow_create(video_mode,
                                    "My_runner",
@@ -192,9 +206,9 @@ int main()
             }
             bol = 3;
         }
-        if (b >= 45 && b <= 192 && bol != 3) {
+        if (b >= 45 && b <= 192 && bol != 3 && bol != 5) {
             sfRenderWindow_drawSprite(window, stext1b, NULL);
-            return (0);
+            bol = 5;
         }
         if (sfKeyboard_isKeyPressed(sfKeyUp) && bol == 1) {
             sfSprite_setPosition(stext1aa, (sfVector2f) {75, 200});
@@ -213,9 +227,9 @@ int main()
             }
             bol = 2;
         }
-        if (c >= 45 && c <= 200 && bol != 2) {
+        if (c >= 45 && c <= 200 && bol != 2 && bol != 5) {
             sfRenderWindow_drawSprite(window, stext1b, NULL);
-            return (0);
+            bol = 5;
         }
             sfRenderWindow_drawSprite(window, stext4a, NULL);
         if (sfTime_asSeconds(time) <= 0.2 && bol == 1) {
@@ -234,9 +248,19 @@ int main()
         if (sfTime_asSeconds(time) >= 0.8) {
             sfClock_restart(clock);
         }
-
+        if (bol == 5) {
+            sfRenderWindow_drawSprite(window, stext10, NULL);
+            sfRenderWindow_drawSprite(window, stext11, NULL);
+            if (sfMouse_isButtonPressed(sfMouseLeft)) {
+                sfSoundBuffer_destroy(sbang);
+                sfSound_destroy(bang);
+                sfRenderWindow_destroy(window);
+                main();
+            }
+        }
         sfRenderWindow_display(window);
-        bol = 1;
+        if (bol != 5)
+            bol = 1;
     }
     sfSoundBuffer_destroy(sbang);
     sfSound_destroy(bang);
