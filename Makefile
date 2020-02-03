@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-CC	=	gcc -l csfml-graphics
+CC	=	gcc -lcsfml-system -lcsfml-window -lcsfml-graphics -lcsfml-audio
 
 RM	=	 rm -rf
 
@@ -13,15 +13,7 @@ CFLAGS = -W -Wall -Wextra
 
 NAME = my_runner
 
-SRC = 	src/destroy_resources.c     	\
-		src/game_loop.c        			\
-		src/main.c             			\
-		src/frame_buffer_destroy.c   	\
-		src/init_resources.c  			\
-		src/my_runner.c					\
-		src/help.c						\
-		src/my_putstr.c					\
-		src/my_putchar.c
+SRC = 	src/main.c \
 
 OBJ	=	$(SRC:.c=.o)
 
