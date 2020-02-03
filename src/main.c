@@ -12,6 +12,12 @@
 #include <SFML/Config.h>
 #include <time.h>
 #include <stdlib.h>
+#include <SFML/Audio/Export.h>
+#include <SFML/Audio/SoundStatus.h>
+#include <SFML/Audio/Types.h>
+#include <SFML/System/Time.h>
+#include <SFML/System/Vector3.h>
+#include <SFML/Audio.h>
 
 int main()
 {
@@ -125,6 +131,13 @@ int main()
                                    NULL);
     sfTime time;
     sfClock *clock = sfClock_create();
+    sfSoundBuffer *sbang;
+    sbang = sfSoundBuffer_createFromFile("sound/dinosaur.ogg");
+    sfSound *bang;
+    bang = sfSound_create();
+    sfSound_setBuffer(bang, sbang);
+    sfSound_play(bang);
+
     sfRenderWindow_setFramerateLimit(window, 60);
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)) {
@@ -225,6 +238,8 @@ int main()
         sfRenderWindow_display(window);
         bol = 1;
     }
+    sfSoundBuffer_destroy(sbang);
+    sfSound_destroy(bang);
     sfRenderWindow_destroy(window);
     return (0);
 }
