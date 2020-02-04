@@ -13,11 +13,23 @@ CFLAGS = -W -Wall -Wextra
 
 NAME = my_runner
 
-SRC = 	src/main.c \
-		src/my_getnbr.c \
+SRC = 	src/condition_paralax.c \
+		src/lose_condition.c \
 		src/my_int_to_char.c \
-		src/my_power.c \
+		src/sound_management.c \
+		src/destroy_item.c \
+		src/main.c \
 		src/my_number_len.c \
+		src/gam_loop.c \
+		src/make_screen.c \
+		src/my_power.c \
+		src/init_var.c \
+		src/move_dino.c \
+		src/my_runner.c \
+		src/key_manage.c \
+		src/my_getnbr.c \
+		src/play_score.c \
+
 
 OBJ	=	$(SRC:.c=.o)
 
