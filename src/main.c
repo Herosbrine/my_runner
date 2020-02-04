@@ -18,252 +18,295 @@
 #include <SFML/System/Time.h>
 #include <SFML/System/Vector3.h>
 #include <SFML/Audio.h>
+#include "struct.h"
 
-int main()
+void destroy_item2(data_t *texture, sprite_t *sprite)
 {
-    sfRenderWindow *window = NULL;
+    sfSprite_destroy(sprite->stext1);
+    sfSprite_destroy(sprite->stext1a);
+    sfSprite_destroy(sprite->stext1b);
+    sfSprite_destroy(sprite->stext1c);
+    sfSprite_destroy(sprite->stext1d);
+    sfSprite_destroy(sprite->stext2a);
+    sfSprite_destroy(sprite->stext3);
+    sfSprite_destroy(sprite->stext3a);
+    sfSprite_destroy(sprite->stext4a);
+    sfSprite_destroy(sprite->stext10);
+    sfSoundBuffer_destroy(texture->sbang);
+    sfSound_destroy(texture->bang);
+    sfRenderWindow_destroy(texture->window);
+}
+
+void destroy_item(data_t *texture, sprite_t *sprite)
+{
+    sfTexture_destroy(texture->ttext1);
+    sfTexture_destroy(texture->ttext1e);
+    sfTexture_destroy(texture->ttext1f);
+    sfTexture_destroy(texture->ttext1a);
+    sfTexture_destroy(texture->ttext1b);
+    sfTexture_destroy(texture->ttext1c);
+    sfTexture_destroy(texture->ttext1d);
+    sfTexture_destroy(texture->ttext2a);
+    sfTexture_destroy(texture->ttext3);
+    sfTexture_destroy(texture->ttext3a);
+    sfTexture_destroy(texture->ttext4a);
+    sfTexture_destroy(texture->ttext10);
+    destroy_item2(texture, sprite);
+}
+
+void init_var4(data_t *texture, sprite_t *sprite)
+{
+    texture->ttext4a = sfTexture_createFromFile("images/cactus.png", NULL);
+    sprite->stext4a = sfSprite_create();
+    sfSprite_setTexture(sprite->stext4a, texture->ttext4a, 0);
+    sfSprite_setPosition(sprite->stext4a, (sfVector2f) {sprite->c, 400});
+    texture->ttext10 = sfTexture_createFromFile("images/game_over.png", NULL);
+    sprite->stext10 = sfSprite_create();
+    sfSprite_setTexture(sprite->stext10, texture->ttext10, 0);
+    sfSprite_setPosition(sprite->stext10, (sfVector2f) {500, 302});
+    texture->ttext11 = sfTexture_createFromFile("images/restart.png", NULL);
+    sprite->stext11 = sfSprite_create();
+    sfSprite_setTexture(sprite->stext11, texture->ttext11, 0);
+    sfSprite_setPosition(sprite->stext11, (sfVector2f) {650, 360});
+}
+
+void init_var3(data_t *texture, sprite_t *sprite)
+{
+    texture->ttext1e = sfTexture_createFromFile("images/sky.png", NULL);
+    sprite->stext1e = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1e, texture->ttext1e, 0);
+    sfSprite_setPosition(sprite->stext1e, (sfVector2f) {sprite->y, 0});
+    texture->ttext1f = sfTexture_createFromFile("images/moon.png", NULL);
+    sprite->stext1f = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1f, texture->ttext1f, 0);
+    sfSprite_setPosition(sprite->stext1f, (sfVector2f) {sprite->z, 50});
+    texture->ttext3 = sfTexture_createFromFile("images/bird.png", NULL);
+    sprite->stext3 = sfSprite_create();
+    sfSprite_setTexture(sprite->stext3, texture->ttext3, 0);
+    sfSprite_setPosition(sprite->stext3, (sfVector2f) {sprite->b, 300});
+    texture->ttext3a = sfTexture_createFromFile("images/bird2.png", NULL);
+    sprite->stext3a = sfSprite_create();
+    sfSprite_setTexture(sprite->stext3a, texture->ttext3a, 0);
+    sfSprite_setPosition(sprite->stext3a, (sfVector2f) {sprite->b, 300});
+}
+
+void init_var2(data_t *texture, sprite_t *sprite)
+{
+    texture->ttext1c = sfTexture_createFromFile("images/sheet_sprite3.png", NULL);
+    sprite->stext1c = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1c, texture->ttext1c, 0);
+    sfSprite_setPosition(sprite->stext1c, (sfVector2f) {75,320});
+    texture->ttext1d = sfTexture_createFromFile("images/ground.png", NULL);
+    sprite->stext1d = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1d, texture->ttext1d, 0);
+    sfSprite_setPosition(sprite->stext1d, (sfVector2f) {sprite->x,450});
+    texture->ttext2 = sfTexture_createFromFile("images/down.png", NULL);
+    sprite->stext2 = sfSprite_create();
+    sfSprite_setTexture(sprite->stext2, texture->ttext2, 0);
+    sfSprite_setPosition(sprite->stext2, (sfVector2f) {75, 420});
+    texture->ttext2a = sfTexture_createFromFile("images/down2.png", NULL);
+    sprite->stext2a = sfSprite_create();
+    sfSprite_setTexture(sprite->stext2a, texture->ttext2a, 0);
+    sfSprite_setPosition(sprite->stext2a, (sfVector2f) {75, 420});
+}
+
+void init_var(data_t *texture, sprite_t *sprite)
+{
+    texture->ttext1 = sfTexture_createFromFile("images/Background.png", NULL);
+    sprite->stext1 = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1, texture->ttext1, 0);
+    texture->ttext1a = sfTexture_createFromFile("images/sheet_sprite.png", NULL);
+    sprite->stext1a = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1a, texture->ttext1a, 0);
+    sfSprite_setPosition(sprite->stext1a, (sfVector2f) {75,320});
+    texture->ttext1aa = sfTexture_createFromFile("images/sheet_sprite.png", NULL);
+    sprite->stext1aa = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1aa, texture->ttext1aa, 0);
+    sfSprite_setPosition(sprite->stext1aa, (sfVector2f) {75,320});
+    texture->ttext1b = sfTexture_createFromFile("images/sheet_sprite2.png", NULL);
+    sprite->stext1b = sfSprite_create();
+    sfSprite_setTexture(sprite->stext1b, texture->ttext1b, 0);
+    sfSprite_setPosition(sprite->stext1b, (sfVector2f) {75,320});
+    init_var2(texture, sprite);
+    init_var3(texture, sprite);
+    init_var4(texture, sprite);
+}
+
+void lose_condition(data_t *texture, sprite_t *sprite)
+{
+    if (sfTime_asSeconds(texture->time) >= 0.8)
+        sfClock_restart(texture->clock);
+    if (sprite->bol == 5) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext10, NULL);
+        sfRenderWindow_drawSprite(texture->window, sprite->stext11, NULL);
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
+            destroy_item(texture, sprite);
+            main();
+        }
+    }
+    sfRenderWindow_display(texture->window);
+    if (sprite->bol != 5)
+        sprite->bol = 1;
+}
+
+void move_dino(data_t *texture, sprite_t *sprite)
+{
+    if (sprite->c >= 45 && sprite->c <= 200
+    && sprite->bol != 2 && sprite->bol != 5) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext1b, NULL);
+        sprite->bol = 5;
+    }
+        sfRenderWindow_drawSprite(texture->window, sprite->stext4a, NULL);
+    if (sfTime_asSeconds(texture->time) <= 0.2 && sprite->bol == 1) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext1b, NULL);
+        sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
+    }
+    if (sfTime_asSeconds(texture->time) <= 0.5
+    && sfTime_asSeconds(texture->time) >= 0.2 && sprite->bol == 1) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext1a, NULL);
+        sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
+    }
+    if (sfTime_asSeconds(texture->time) >= 0.5
+    && sfTime_asSeconds(texture->time) <= 0.8 && sprite->bol == 1) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext1c, NULL);
+        sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
+    }
+}
+
+void key_up(data_t *texture, sprite_t *sprite)
+{
+    if (sprite->b >= 45 && sprite->b <= 192
+    && sprite->bol != 3 && sprite->bol != 5) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext1b, NULL);
+        sprite->bol = 5;
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyUp) && sprite->bol == 1) {
+        sfSprite_setPosition(sprite->stext1aa, (sfVector2f) {75, 200});
+        sfRenderWindow_drawSprite(texture->window, sprite->stext1aa, NULL);
+        if (sfTime_asSeconds(texture->time) < 0.2)
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
+        if (sfTime_asSeconds(texture->time) > 0.2
+        && sfTime_asSeconds(texture->time) < 0.4)
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
+        if (sfTime_asSeconds(texture->time) > 0.4
+        && sfTime_asSeconds(texture->time) < 0.6)
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
+        if (sfTime_asSeconds(texture->time) > 0.6)
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
+        sprite->bol = 2;
+    }
+}
+
+void key_down(data_t *texture, sprite_t *sprite)
+{
+    if (sfKeyboard_isKeyPressed(sfKeyDown) && sprite->bol == 1) {
+        if (sfTime_asSeconds(texture->time) < 0.2) {
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
+            sfRenderWindow_drawSprite(texture->window, sprite->stext2, NULL);
+        }
+        if (sfTime_asSeconds(texture->time) > 0.2
+        && sfTime_asSeconds(texture->time) < 0.4) {
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
+            sfRenderWindow_drawSprite(texture->window, sprite->stext2a, NULL);
+        }
+        if (sfTime_asSeconds(texture->time) > 0.4
+        && sfTime_asSeconds(texture->time) < 0.6) {
+            sfRenderWindow_drawSprite(texture->window, sprite->stext2, NULL);
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
+        }
+        if (sfTime_asSeconds(texture->time) > 0.6) {
+            sfRenderWindow_drawSprite(texture->window, sprite->stext2a, NULL);
+            sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
+        }
+        sprite->bol = 3;
+    }
+}
+
+void condition(sprite_t *sprite)
+{
+    if (sprite->x <= -1724)
+        sprite->x = 0;
+    if (sprite->y <= -1724)
+        sprite->y = 0;
+    if (sprite->z <= 1)
+        sprite->z = 1888;
+    if (sprite->b < 1)
+        sprite->b = 4000;
+    if (sprite->c < 1)
+        sprite->c = 2500;
+}
+
+void game_loop(data_t *texture, sprite_t *sprite)
+{
+    sfRenderWindow_drawSprite(texture->window, sprite->stext1, NULL);
+    sfRenderWindow_drawSprite(texture->window, sprite->stext1d, NULL);
+    sfRenderWindow_drawSprite(texture->window, sprite->stext1e, NULL);
+    sfRenderWindow_drawSprite(texture->window, sprite->stext1f, NULL);
+    texture->time = sfClock_getElapsedTime(texture->clock);
+    sprite->x = sprite->x - 10;
+    sprite->y = sprite->y - 4;
+    sprite->z = sprite->z - 1;
+    if (sprite->c > 1480)
+        sprite->b = sprite->b - 15;
+    if (sprite->b > 1480)
+        sprite->c = sprite->c - 10;
+    sfSprite_setPosition(sprite->stext1d, (sfVector2f) {sprite->x, 450});
+    sfSprite_setPosition(sprite->stext1e, (sfVector2f) {sprite->y, 0});
+    sfSprite_setPosition(sprite->stext1f, (sfVector2f) {sprite->z, 50});
+    sfSprite_setPosition(sprite->stext3, (sfVector2f) {sprite->b, 320});
+    sfSprite_setPosition(sprite->stext3a, (sfVector2f) {sprite->b, 300});
+    sfSprite_setPosition(sprite->stext4a, (sfVector2f) {sprite->c, 400});
+}
+
+void my_runner(data_t *texture, sprite_t *sprite, sfEvent event)
+{
+    texture->sbang = sfSoundBuffer_createFromFile("sound/dinosaur.ogg");
+    texture->bang = sfSound_create();
+    sfSound_setBuffer(texture->bang, texture->sbang);
+    sfSound_play(texture->bang);
+
+    sfRenderWindow_setFramerateLimit(texture->window, 60);
+    while (sfRenderWindow_isOpen(texture->window)) {
+        while (sfRenderWindow_pollEvent(texture->window, &event)) {
+            if (event.type == sfEvtClosed) {
+                sfRenderWindow_close(texture->window);
+            }
+        }
+        game_loop(texture, sprite);
+        condition(sprite);
+        key_down(texture, sprite);
+        key_up(texture, sprite);
+        move_dino(texture, sprite);
+        lose_condition(texture, sprite);
+    }
+}
+
+void make_screen(data_t *texture, sprite_t *sprite)
+{
+    texture->window = NULL;
     sfVideoMode video_mode;
     sfEvent event;
     video_mode.height = HEIGHT;
     video_mode.width = WIDTH;
     video_mode.bitsPerPixel = 32;
-    int x = 0;
-    int y = 0;
-    int z = 1888;
-    int bol = 1;
-    int b = 4000;
-    int c = 2500;
-
-    sfTexture *ttext1;
-    ttext1 = sfTexture_createFromFile("images/Background.png", NULL);
-    sfSprite *stext1;
-    stext1 = sfSprite_create();
-    sfSprite_setTexture(stext1, ttext1, 0);
-
-    sfTexture *ttext1a;
-    ttext1a = sfTexture_createFromFile("images/sheet_sprite.png", NULL);
-    sfSprite *stext1a;
-    stext1a = sfSprite_create();
-    sfSprite_setTexture(stext1a, ttext1a, 0);
-    sfSprite_setPosition(stext1a, (sfVector2f) {75,320});
-
-    sfTexture *ttext1aa;
-    ttext1aa = sfTexture_createFromFile("images/sheet_sprite.png", NULL);
-    sfSprite *stext1aa;
-    stext1aa = sfSprite_create();
-    sfSprite_setTexture(stext1aa, ttext1aa, 0);
-    sfSprite_setPosition(stext1aa, (sfVector2f) {75,320});
-
-    sfTexture *ttext1b;
-    ttext1b = sfTexture_createFromFile("images/sheet_sprite2.png", NULL);
-    sfSprite *stext1b;
-    stext1b = sfSprite_create();
-    sfSprite_setTexture(stext1b, ttext1b, 0);
-    sfSprite_setPosition(stext1b, (sfVector2f) {75,320});
-
-    sfTexture *ttext1c;
-    ttext1c = sfTexture_createFromFile("images/sheet_sprite3.png", NULL);
-    sfSprite *stext1c;
-    stext1c = sfSprite_create();
-    sfSprite_setTexture(stext1c, ttext1c, 0);
-    sfSprite_setPosition(stext1c, (sfVector2f) {75,320});
-
-    sfTexture *ttext1d;
-    ttext1d = sfTexture_createFromFile("images/ground.png", NULL);
-    sfSprite *stext1d;
-    stext1d = sfSprite_create();
-    sfSprite_setTexture(stext1d, ttext1d, 0);
-    sfSprite_setPosition(stext1d, (sfVector2f) {x,450});
-
-    sfTexture *ttext2;
-    ttext2 = sfTexture_createFromFile("images/down_sprite.png", NULL);
-    sfSprite *stext2;
-    stext2 = sfSprite_create();
-    sfSprite_setTexture(stext2, ttext2, 0);
-    sfSprite_setPosition(stext2, (sfVector2f) {75, 420});
-
-    sfTexture *ttext2a;
-    ttext2a = sfTexture_createFromFile("images/down_sprite2.png", NULL);
-    sfSprite *stext2a;
-    stext2a = sfSprite_create();
-    sfSprite_setTexture(stext2a, ttext2a, 0);
-    sfSprite_setPosition(stext2a, (sfVector2f) {75, 420});
-
-    sfTexture *ttext1e;
-    ttext1e = sfTexture_createFromFile("images/sky.png", NULL);
-    sfSprite *stext1e;
-    stext1e = sfSprite_create();
-    sfSprite_setTexture(stext1e, ttext1e, 0);
-    sfSprite_setPosition(stext1e, (sfVector2f) {y, 0});
-
-    sfTexture *ttext1f;
-    ttext1f = sfTexture_createFromFile("images/moon.png", NULL);
-    sfSprite *stext1f;
-    stext1f = sfSprite_create();
-    sfSprite_setTexture(stext1f, ttext1f, 0);
-    sfSprite_setPosition(stext1f, (sfVector2f) {z, 50});
-
-    sfTexture *ttext3;
-    ttext3 = sfTexture_createFromFile("images/bird.png", NULL);
-    sfSprite *stext3;
-    stext3 = sfSprite_create();
-    sfSprite_setTexture(stext3, ttext3, 0);
-    sfSprite_setPosition(stext3, (sfVector2f) {b, 300});
-
-    sfTexture *ttext3a;
-    ttext3a = sfTexture_createFromFile("images/bird2.png", NULL);
-    sfSprite *stext3a;
-    stext3a = sfSprite_create();
-    sfSprite_setTexture(stext3a, ttext3a, 0);
-    sfSprite_setPosition(stext3a, (sfVector2f) {b, 300});
-
-    sfTexture *ttext4a;
-    ttext4a = sfTexture_createFromFile("images/cactus.png", NULL);
-    sfSprite *stext4a;
-    stext4a = sfSprite_create();
-    sfSprite_setTexture(stext4a, ttext4a, 0);
-    sfSprite_setPosition(stext4a, (sfVector2f) {c, 400});
-
-    sfTexture *ttext10;
-    ttext10 = sfTexture_createFromFile("images/game_over.png", NULL);
-    sfSprite *stext10;
-    stext10 = sfSprite_create();
-    sfSprite_setTexture(stext10, ttext10, 0);
-    sfSprite_setPosition(stext10, (sfVector2f) {500, 302});
-
-    sfTexture *ttext11;
-    ttext11 = sfTexture_createFromFile("images/restart.png", NULL);
-    sfSprite *stext11;
-    stext11 = sfSprite_create();
-    sfSprite_setTexture(stext11, ttext11, 0);
-    sfSprite_setPosition(stext11, (sfVector2f) {650, 360});
-
-
-    window = sfRenderWindow_create(video_mode,
+    sprite->x = 0;
+    sprite->y = 0;
+    sprite->z = 1888;
+    sprite->bol = 1;
+    sprite->b = 4000;
+    sprite->c = 2500;
+    init_var(texture, sprite);
+    texture->window = sfRenderWindow_create(video_mode,
                                    "My_runner",
                                    sfDefaultStyle,
                                    NULL);
-    sfTime time;
-    sfClock *clock = sfClock_create();
-    sfSoundBuffer *sbang;
-    sbang = sfSoundBuffer_createFromFile("sound/dinosaur.ogg");
-    sfSound *bang;
-    bang = sfSound_create();
-    sfSound_setBuffer(bang, sbang);
-    sfSound_play(bang);
+    texture->clock = sfClock_create();
+    my_runner(texture, sprite, event);
+}
 
-    sfRenderWindow_setFramerateLimit(window, 60);
-    while (sfRenderWindow_isOpen(window)) {
-        while (sfRenderWindow_pollEvent(window, &event)) {
-            if (event.type == sfEvtClosed)
-                sfRenderWindow_close(window);
-        }
-        sfRenderWindow_drawSprite(window, stext1, NULL);
-        sfRenderWindow_drawSprite(window, stext1d, NULL);
-        sfRenderWindow_drawSprite(window, stext1e, NULL);
-        sfRenderWindow_drawSprite(window, stext1f, NULL);
-        time = sfClock_getElapsedTime(clock);
-        x = x - 10;
-        y = y - 4;
-        z = z - 1;
-        if (c > 1480)
-            b = b - 15;
-        if (b > 1480)
-            c = c - 10;
-
-        sfSprite_setPosition(stext1d, (sfVector2f) {x, 450});
-        sfSprite_setPosition(stext1e, (sfVector2f) {y, 0});
-        sfSprite_setPosition(stext1f, (sfVector2f) {z, 50});
-        sfSprite_setPosition(stext3, (sfVector2f) {b, 320});
-        sfSprite_setPosition(stext3a, (sfVector2f) {b, 300});
-        sfSprite_setPosition(stext4a, (sfVector2f) {c, 400});
-        if (x <= -1724)
-            x = 0;
-        if (y <= -1724)
-            y = 0;
-        if (z <= 1)
-            z = 1888;
-        if (b < 1)
-            b = 4000;
-        if (c < 1)
-            c = 2500;
-        if (sfKeyboard_isKeyPressed(sfKeyDown) && bol == 1) {
-            if (sfTime_asSeconds(time) < 0.2) {
-                sfRenderWindow_drawSprite(window, stext3, NULL);
-                sfRenderWindow_drawSprite(window, stext2, NULL);
-            }
-            if (sfTime_asSeconds(time) > 0.2 && sfTime_asSeconds(time) < 0.4) {
-                sfRenderWindow_drawSprite(window, stext3a, NULL);
-                sfRenderWindow_drawSprite(window, stext2a, NULL);
-            }
-            if (sfTime_asSeconds(time) > 0.4 && sfTime_asSeconds(time) < 0.6) {
-                sfRenderWindow_drawSprite(window, stext2, NULL);
-                sfRenderWindow_drawSprite(window, stext3, NULL);
-            }
-            if (sfTime_asSeconds(time) > 0.6) {
-                sfRenderWindow_drawSprite(window, stext2a, NULL);
-                sfRenderWindow_drawSprite(window, stext3a, NULL);
-            }
-            bol = 3;
-        }
-        if (b >= 45 && b <= 192 && bol != 3 && bol != 5) {
-            sfRenderWindow_drawSprite(window, stext1b, NULL);
-            bol = 5;
-        }
-        if (sfKeyboard_isKeyPressed(sfKeyUp) && bol == 1) {
-            sfSprite_setPosition(stext1aa, (sfVector2f) {75, 200});
-            sfRenderWindow_drawSprite(window, stext1aa, NULL);
-            if (sfTime_asSeconds(time) < 0.2) {
-                sfRenderWindow_drawSprite(window, stext3, NULL);
-            }
-            if (sfTime_asSeconds(time) > 0.2 && sfTime_asSeconds(time) < 0.4) {
-                sfRenderWindow_drawSprite(window, stext3a, NULL);
-            }
-            if (sfTime_asSeconds(time) > 0.4 && sfTime_asSeconds(time) < 0.6) {
-                sfRenderWindow_drawSprite(window, stext3, NULL);
-            }
-            if (sfTime_asSeconds(time) > 0.6) {
-                sfRenderWindow_drawSprite(window, stext3a, NULL);
-            }
-            bol = 2;
-        }
-        if (c >= 45 && c <= 200 && bol != 2 && bol != 5) {
-            sfRenderWindow_drawSprite(window, stext1b, NULL);
-            bol = 5;
-        }
-            sfRenderWindow_drawSprite(window, stext4a, NULL);
-        if (sfTime_asSeconds(time) <= 0.2 && bol == 1) {
-            sfRenderWindow_drawSprite(window, stext1b, NULL);
-            sfRenderWindow_drawSprite(window, stext3, NULL);
-        }
-        if (sfTime_asSeconds(time) <= 0.5 && sfTime_asSeconds(time) >= 0.2 && bol == 1) {
-            sfRenderWindow_drawSprite(window, stext1a, NULL);
-            sfRenderWindow_drawSprite(window, stext3a, NULL);
-        }
-        if (sfTime_asSeconds(time) >= 0.5 && sfTime_asSeconds(time) <= 0.8 && bol == 1) {
-            sfRenderWindow_drawSprite(window, stext1c, NULL);
-            sfRenderWindow_drawSprite(window, stext3, NULL);
-
-        }
-        if (sfTime_asSeconds(time) >= 0.8) {
-            sfClock_restart(clock);
-        }
-        if (bol == 5) {
-            sfRenderWindow_drawSprite(window, stext10, NULL);
-            sfRenderWindow_drawSprite(window, stext11, NULL);
-            if (sfMouse_isButtonPressed(sfMouseLeft)) {
-                sfSoundBuffer_destroy(sbang);
-                sfSound_destroy(bang);
-                sfRenderWindow_destroy(window);
-                main();
-            }
-        }
-        sfRenderWindow_display(window);
-        if (bol != 5)
-            bol = 1;
-    }
-    sfSoundBuffer_destroy(sbang);
-    sfSound_destroy(bang);
-    sfRenderWindow_destroy(window);
-    return (0);
+int main()
+{
+    data_t texture;
+    sprite_t sprite;
+    make_screen(&texture, &sprite);
 }
