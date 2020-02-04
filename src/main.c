@@ -56,6 +56,11 @@ void destroy_item(data_t *texture, sprite_t *sprite)
 
 void init_var4(data_t *texture, sprite_t *sprite)
 {
+    sprite->count2 = 1;
+    sprite->count = 1;
+    sprite->change_score = 150;
+    sprite->score1 = 0;
+    sprite->speed = 60;
     texture->ttext4a = sfTexture_createFromFile("images/cactus.png", NULL);
     sprite->stext4a = sfSprite_create();
     sfSprite_setTexture(sprite->stext4a, texture->ttext4a, 0);
@@ -290,17 +295,28 @@ void score_management(data_t *texture, sprite_t *sprite)
     sfRenderWindow_drawText(texture->window, sprite->score, NULL);
 }
 
-void my_runner(data_t *texture, sprite_t *sprite, sfEvent event)
+void speed_game(sprite_t *sprite)
 {
-    sprite->score1 = 0;
-    sprite->speed = 60;
-    int haha = 1;
-    int count = 1;
-    int change_score = 150;
+    if (sprite->score1 > sprite->change_score
+    && sprite->count2 == sprite->count) {
+        sprite->speed = sprite->speed + 5;
+        sprite->count++;
+        sprite->change_score = sprite->change_score + 150;
+        sprite->count2 = sprite->count;
+    }
+}
+
+void sound_management(data_t *texture)
+{
     texture->sbang = sfSoundBuffer_createFromFile("sound/dinosaur.ogg");
     texture->bang = sfSound_create();
     sfSound_setBuffer(texture->bang, texture->sbang);
     sfSound_play(texture->bang);
+}
+
+void my_runner(data_t *texture, sprite_t *sprite, sfEvent event)
+{
+    sound_management(texture);
     player_score_msg(sprite);
     player_score(sprite);
     sfRenderWindow_setFramerateLimit(texture->window, sprite->speed);
@@ -308,14 +324,10 @@ void my_runner(data_t *texture, sprite_t *sprite, sfEvent event)
         while (sfRenderWindow_pollEvent(texture->window, &event)) {
             if (event.type == sfEvtClosed) {
                 sfRenderWindow_close(texture->window);
+                sfRenderWindow_close(texture->window);
             }
         }
-        if (sprite->score1 > change_score && haha == count) {
-            sprite->speed = sprite->speed + 5;
-            count++;
-            change_score = change_score + 150;
-            haha = count;
-        }
+        speed_game(sprite);
         sfRenderWindow_setFramerateLimit(texture->window, sprite->speed);
         game_loop(texture, sprite);
         condition(sprite);

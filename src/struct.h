@@ -57,7 +57,10 @@ struct sprite_s {
     sfText *score_txt;
     sfText *score;
     sfFont *font;
+    int change_score;
     int speed;
+    int count;
+    int count2;
     int score1;
     int x;
     int y;
