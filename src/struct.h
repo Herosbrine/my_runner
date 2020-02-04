@@ -54,6 +54,11 @@ struct sprite_s {
     sfSprite *stext4a;
     sfSprite *stext10;
     sfSprite *stext11;
+    sfText *score_txt;
+    sfText *score;
+    sfFont *font;
+    int speed;
+    int score1;
     int x;
     int y;
     int z;
@@ -64,5 +69,22 @@ struct sprite_s {
 typedef struct sprite_s sprite_t;
 
 //PROG
-
+void destroy_item2(data_t *texture, sprite_t *sprite);
+void destroy_item(data_t *texture, sprite_t *sprite);
+void init_var4(data_t *texture, sprite_t *sprite);
+void init_var3(data_t *texture, sprite_t *sprite);
+void init_var2(data_t *texture, sprite_t *sprite);
+void init_var(data_t *texture, sprite_t *sprite);
+void lose_condition(data_t *texture, sprite_t *sprite);
+void move_dino(data_t *texture, sprite_t *sprite);
+void key_up(data_t *texture, sprite_t *sprite);
+void key_down(data_t *texture, sprite_t *sprite);
+void condition(sprite_t *sprite);
+void game_loop(data_t *texture, sprite_t *sprite);
+void my_runner(data_t *texture, sprite_t *sprite, sfEvent event);
+void make_screen(data_t *texture, sprite_t *sprite);
+long my_getnbr(char *str);
+char *my_int_to_char(int nb);
+int my_power(int x, int y);
+int my_number_len(int nb);
 int main();

@@ -14,6 +14,10 @@ CFLAGS = -W -Wall -Wextra
 NAME = my_runner
 
 SRC = 	src/main.c \
+		src/my_getnbr.c \
+		src/my_int_to_char.c \
+		src/my_power.c \
+		src/my_number_len.c \
 
 OBJ	=	$(SRC:.c=.o)
 

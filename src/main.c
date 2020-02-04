@@ -92,7 +92,7 @@ void init_var3(data_t *texture, sprite_t *sprite)
 
 void init_var2(data_t *texture, sprite_t *sprite)
 {
-    texture->ttext1c = sfTexture_createFromFile("images/sheet_sprite3.png", NULL);
+    texture->ttext1c = sfTexture_createFromFile("images/sprite3.png", NULL);
     sprite->stext1c = sfSprite_create();
     sfSprite_setTexture(sprite->stext1c, texture->ttext1c, 0);
     sfSprite_setPosition(sprite->stext1c, (sfVector2f) {75,320});
@@ -115,15 +115,15 @@ void init_var(data_t *texture, sprite_t *sprite)
     texture->ttext1 = sfTexture_createFromFile("images/Background.png", NULL);
     sprite->stext1 = sfSprite_create();
     sfSprite_setTexture(sprite->stext1, texture->ttext1, 0);
-    texture->ttext1a = sfTexture_createFromFile("images/sheet_sprite.png", NULL);
+    texture->ttext1a = sfTexture_createFromFile("images/sprite.png", NULL);
     sprite->stext1a = sfSprite_create();
     sfSprite_setTexture(sprite->stext1a, texture->ttext1a, 0);
     sfSprite_setPosition(sprite->stext1a, (sfVector2f) {75,320});
-    texture->ttext1aa = sfTexture_createFromFile("images/sheet_sprite.png", NULL);
+    texture->ttext1aa = sfTexture_createFromFile("images/sprite.png", NULL);
     sprite->stext1aa = sfSprite_create();
     sfSprite_setTexture(sprite->stext1aa, texture->ttext1aa, 0);
     sfSprite_setPosition(sprite->stext1aa, (sfVector2f) {75,320});
-    texture->ttext1b = sfTexture_createFromFile("images/sheet_sprite2.png", NULL);
+    texture->ttext1b = sfTexture_createFromFile("images/sprite2.png", NULL);
     sprite->stext1b = sfSprite_create();
     sfSprite_setTexture(sprite->stext1b, texture->ttext1b, 0);
     sfSprite_setPosition(sprite->stext1b, (sfVector2f) {75,320});
@@ -139,6 +139,7 @@ void lose_condition(data_t *texture, sprite_t *sprite)
     if (sprite->bol == 5) {
         sfRenderWindow_drawSprite(texture->window, sprite->stext10, NULL);
         sfRenderWindow_drawSprite(texture->window, sprite->stext11, NULL);
+        sfRenderWindow_setFramerateLimit(texture->window, 60);
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             destroy_item(texture, sprite);
             main();
@@ -258,25 +259,70 @@ void game_loop(data_t *texture, sprite_t *sprite)
     sfSprite_setPosition(sprite->stext4a, (sfVector2f) {sprite->c, 400});
 }
 
+void player_score_msg(sprite_t *sprite)
+{
+    sprite->font = sfFont_createFromFile("images/Roboto-BlackItalic.ttf");
+    sprite->score = sfText_create();
+    sfText_setFont(sprite->score, sprite->font);
+    sfText_setString(sprite->score, my_int_to_char(sprite->score1));
+    sfText_setColor(sprite->score, (sfColor) {0, 0, 0, 255});
+    sfText_setCharacterSize(sprite->score, 40);
+    sfText_setPosition(sprite->score, (sfVector2f) {1280, 0});
+}
+
+void player_score(sprite_t *sprite)
+{
+    sprite->font = sfFont_createFromFile("images/Roboto-BlackItalic.ttf");
+    sprite->score_txt = sfText_create();
+    sfText_setFont(sprite->score_txt, sprite->font);
+    sfText_setString(sprite->score_txt, "SCORE :");
+    sfText_setColor(sprite->score_txt, (sfColor) {0, 0, 0, 255});
+    sfText_setCharacterSize(sprite->score_txt, 40);
+    sfText_setPosition(sprite->score_txt, (sfVector2f) {1100, 0});
+}
+
+void score_management(data_t *texture, sprite_t *sprite)
+{
+    if (sprite->bol != 5)
+        sprite->score1++;
+    sfText_setString(sprite->score, my_int_to_char(sprite->score1));
+    sfRenderWindow_drawText(texture->window, sprite->score_txt, NULL);
+    sfRenderWindow_drawText(texture->window, sprite->score, NULL);
+}
+
 void my_runner(data_t *texture, sprite_t *sprite, sfEvent event)
 {
+    sprite->score1 = 0;
+    sprite->speed = 60;
+    int haha = 1;
+    int count = 1;
+    int change_score = 150;
     texture->sbang = sfSoundBuffer_createFromFile("sound/dinosaur.ogg");
     texture->bang = sfSound_create();
     sfSound_setBuffer(texture->bang, texture->sbang);
     sfSound_play(texture->bang);
-
-    sfRenderWindow_setFramerateLimit(texture->window, 60);
+    player_score_msg(sprite);
+    player_score(sprite);
+    sfRenderWindow_setFramerateLimit(texture->window, sprite->speed);
     while (sfRenderWindow_isOpen(texture->window)) {
         while (sfRenderWindow_pollEvent(texture->window, &event)) {
             if (event.type == sfEvtClosed) {
                 sfRenderWindow_close(texture->window);
             }
         }
+        if (sprite->score1 > change_score && haha == count) {
+            sprite->speed = sprite->speed + 5;
+            count++;
+            change_score = change_score + 150;
+            haha = count;
+        }
+        sfRenderWindow_setFramerateLimit(texture->window, sprite->speed);
         game_loop(texture, sprite);
         condition(sprite);
         key_down(texture, sprite);
         key_up(texture, sprite);
         move_dino(texture, sprite);
+        score_management(texture, sprite);
         lose_condition(texture, sprite);
     }
 }
