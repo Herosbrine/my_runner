@@ -21,6 +21,19 @@
 #include <SFML/Audio.h>
 #include "struct.h"
 
+void runner_loop(data_t *texture, sprite_t *sprite)
+{
+    speed_game(sprite);
+    sfRenderWindow_setFramerateLimit(texture->window, sprite->speed);
+    game_loop(texture, sprite);
+    condition(sprite);
+    key_down(texture, sprite);
+    key_up(texture, sprite);
+    move_dino(texture, sprite);
+    score_management(texture, sprite);
+    lose_condition(texture, sprite);
+}
+
 void my_runner(data_t *texture, sprite_t *sprite, sfEvent event)
 {
     sound_management(texture);
@@ -34,14 +47,6 @@ void my_runner(data_t *texture, sprite_t *sprite, sfEvent event)
                 sfRenderWindow_close(texture->window);
             }
         }
-        speed_game(sprite);
-        sfRenderWindow_setFramerateLimit(texture->window, sprite->speed);
-        game_loop(texture, sprite);
-        condition(sprite);
-        key_down(texture, sprite);
-        key_up(texture, sprite);
-        move_dino(texture, sprite);
-        score_management(texture, sprite);
-        lose_condition(texture, sprite);
+        runner_loop(texture, sprite);
     }
 }

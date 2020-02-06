@@ -44,6 +44,19 @@ void key_up(data_t *texture, sprite_t *sprite)
     }
 }
 
+void condition_down(data_t *texture, sprite_t *sprite)
+{
+    if (sfTime_asSeconds(texture->time) > 0.4
+    && sfTime_asSeconds(texture->time) < 0.6) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext2, NULL);
+        sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
+    }
+    if (sfTime_asSeconds(texture->time) > 0.6) {
+        sfRenderWindow_drawSprite(texture->window, sprite->stext2a, NULL);
+        sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
+    }
+}
+
 void key_down(data_t *texture, sprite_t *sprite)
 {
     if (sfKeyboard_isKeyPressed(sfKeyDown) && sprite->bol == 1) {
@@ -56,15 +69,7 @@ void key_down(data_t *texture, sprite_t *sprite)
             sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
             sfRenderWindow_drawSprite(texture->window, sprite->stext2a, NULL);
         }
-        if (sfTime_asSeconds(texture->time) > 0.4
-        && sfTime_asSeconds(texture->time) < 0.6) {
-            sfRenderWindow_drawSprite(texture->window, sprite->stext2, NULL);
-            sfRenderWindow_drawSprite(texture->window, sprite->stext3, NULL);
-        }
-        if (sfTime_asSeconds(texture->time) > 0.6) {
-            sfRenderWindow_drawSprite(texture->window, sprite->stext2a, NULL);
-            sfRenderWindow_drawSprite(texture->window, sprite->stext3a, NULL);
-        }
+        condition_down(texture, sprite);
         sprite->bol = 3;
     }
 }
